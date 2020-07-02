@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/head">
+</head>
+<body>
+
+	<nav th:replace="common/nav"></nav>
+
+	<div class="jumbotron">
+		<div class="container text-center">
+			<form method="post" action="/signin">
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="text" class="form-control" id="email" name="email">
+				</div>
+				<div class="form-group">
+					<label for="pwd">Password:</label>
+					<input type="password" class="form-control" id="pwd" name="pwd">
+				</div>
+				<button class="btn btn-primary btn-block" id="signin">Sign
+					in</button>
+				<button class="btn btn-success btn-block" id="signup">Sign
+					up</button>
+			</form>
+		</div>
+	</div>
+
+	<footer th:replace="common/footer"> </footer>
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+		$('#signin').click(function() {
+			$.ajax({
+				url : '/signin',
+				type : 'post',
+				data : $('form').serialize(),
+				success : function(res) {
+					if (res == 1) {
+						location = '/'
+					} else {
+						alert("ID 또는 PW가 틀렸습니다.");
+					}
+
+				}
+			});
+			return false;
+		});
+		$("#signup").click(function() {
+			location = '/signup';
+			return false;
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

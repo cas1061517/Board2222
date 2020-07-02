@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/head">
+</head>
+<body>
+
+	<nav th:replace="common/nav"></nav>
+
+	<td th:if="${session.user_info} == null">
+		<script>
+			alert("로그인을 하지 않았습니다.")
+			location = '/signin';
+		</script>
+	</td>
+
+	<td th:unless="${session.user_info} == null">
+		<div class="jumbotron">
+			<div class="container text-center">
+				<form method="post" action="/board/write">
+					<div class="form-group">
+						<label for="title">Title:</label>
+						<input type="text" class="form-control" name="title" id="title">
+					</div>
+					<div class="form-group">
+						<label for="content">Content:</label>
+						<textarea class="form-control" rows="5" name="content"
+							id="content"></textarea>
+					</div>
+					<button id="complete" class="btn btn-primary btn-block">글쓰기</button>
+				</form>
+			</div>
+		</div>
+	</td>
+	<footer th:replace="common/footer"> </footer>
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+	//	
+		$('#complete').click(function() {
+			var title = document.querySelector('#title').value;
+			var content = document.querySelector('#content').value;
+			if (title == '') {
+				alert('제목을 입력해주세요')
+			} else if (content == '') {
+				alert('내용을 입력해주세요')
+			} else {
+				$.ajax({
+					url : '/board/write',
+					type : 'post',
+					data : $('form').serialize(),
+
+					success : function(res) {
+						alert("작성을 완료했습니다")
+						location = '/board';
+					}
+				})
+			}
+			return false;
+		});
+	</script>
+
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
